@@ -7,6 +7,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.MoreVert
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -16,12 +18,44 @@ fun MainMenuScreen(
     onNavigateToAbout: () -> Unit
 ) {
     var isLesson1Expanded by remember { mutableStateOf(false) }
+    var isMenuExpanded by remember { mutableStateOf(false) }
 
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
                     Text(text = "Learn Common Lisp")
+                },
+                actions = {
+                    IconButton(
+                        onClick = { isMenuExpanded = true }
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.MoreVert,
+                            contentDescription = "Open menu"
+                        )
+                    }
+
+                    DropdownMenu(
+                        expanded = isMenuExpanded,
+                        onDismissRequest = { isMenuExpanded = false }
+                    ) {
+                        DropdownMenuItem(
+                            text = { Text("Configuration") },
+                            onClick = {
+                                isMenuExpanded = false
+                                onNavigateToSettings()
+                            }
+                        )
+
+                        DropdownMenuItem(
+                            text = { Text("Authors") },
+                            onClick = {
+                                isMenuExpanded = false
+                                onNavigateToAbout()
+                            }
+                        )
+                    }
                 }
             )
         }
@@ -32,7 +66,7 @@ fun MainMenuScreen(
                 .fillMaxSize()
                 .padding(paddingValues)
                 .padding(16.dp),
-            verticalArrangement = Arrangement.SpaceBetween
+            verticalArrangement = Arrangement.Top
         ) {
 
             Column {
@@ -112,30 +146,6 @@ fun MainMenuScreen(
                         modifier = Modifier.padding(20.dp),
                         style = MaterialTheme.typography.titleMedium
                     )
-                }
-            }
-
-            Column {
-                Button(
-                    onClick = { onNavigateToSettings() },
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF4CAF50)
-                    )
-                ) {
-                    Text(text = "Configuration")
-                }
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                Button(
-                    onClick = { onNavigateToAbout() },
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF4CAF50)
-                    )
-                ) {
-                    Text(text = "Authors")
                 }
             }
         }
