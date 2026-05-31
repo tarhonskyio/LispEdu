@@ -4,6 +4,7 @@ object LispRepository {
     val sampleLesson = Lesson(
         id = 1,
         title = "Lisp Syntax & REPL",
+        description = "Learn basic of Common Lisp syntax: lists, atoms, expressions.",
         content = "In Common Lisp, everything is built from s-expressions (symbolic expressions). S-expressions can be atoms or lists. A list is written as open parenthesis, elements separated by spaces, and a closed parenthesis. For example: (plus 2 3). The REPL (Read-Eval-Print-Loop) reads this expression, evaluates it, prints the result, and loops back.",
         quizQuestions = listOf(
             QuizQuestion(
