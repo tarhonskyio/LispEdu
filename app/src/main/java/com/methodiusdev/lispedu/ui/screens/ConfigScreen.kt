@@ -15,6 +15,8 @@ import androidx.compose.ui.unit.dp
 fun ConfigScreen(
     isDarkMode: Boolean,
     onDarkModeChange: (Boolean) -> Unit,
+    areLessonRemindersEnabled: Boolean,
+    onLessonRemindersChange: (Boolean) -> Unit,
     onBackClick: () -> Unit
 ) {
 
@@ -42,6 +44,21 @@ fun ConfigScreen(
             )
         }
 
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(text = "Lesson Reminders")
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+            Switch(
+                checked = areLessonRemindersEnabled,
+                onCheckedChange = onLessonRemindersChange
+            )
+        }
+
         Spacer(modifier = Modifier.height(32.dp))
 
         Button(
@@ -63,6 +80,8 @@ fun ConfigScreenPreview() {
     ConfigScreen(
         isDarkMode = false,
         onDarkModeChange = {},
+        areLessonRemindersEnabled = false,
+        onLessonRemindersChange = {},
         onBackClick = {}
     )
 }
