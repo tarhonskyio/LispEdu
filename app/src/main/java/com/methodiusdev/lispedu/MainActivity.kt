@@ -122,7 +122,8 @@ class MainActivity : ComponentActivity() {
                                 },
                                 onNavigateToLesson = {
                                     navController.navigate(Screen.Lesson.route)
-                                }
+                                },
+                                lispRepository = LispRepository
                             )
                         }
 

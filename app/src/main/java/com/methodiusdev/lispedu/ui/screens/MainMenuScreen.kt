@@ -9,13 +9,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
+import com.methodiusdev.lispedu.data.LispRepository
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainMenuScreen(
     onNavigateToLesson: () -> Unit,
     onNavigateToSettings: () -> Unit,
-    onNavigateToAbout: () -> Unit
+    onNavigateToAbout: () -> Unit,
+    lispRepository: LispRepository
 ) {
     var isLesson1Expanded by remember { mutableStateOf(false) }
     var isMenuExpanded by remember { mutableStateOf(false) }
@@ -91,7 +93,7 @@ fun MainMenuScreen(
                         Spacer(modifier = Modifier.height(8.dp))
 
                         Text(
-                            text = "Chapter 4: Lisp Syntax",
+                            text = lispRepository.sampleLesson.title,
                             style = MaterialTheme.typography.bodyMedium
                         )
 
@@ -99,7 +101,7 @@ fun MainMenuScreen(
                             Spacer(modifier = Modifier.height(16.dp))
 
                             Text(
-                                text = "Learn Common Lisp syntax, lists, atoms, expressions and basic function usage.",
+                                text = lispRepository.sampleLesson.description,
                                 style = MaterialTheme.typography.bodyMedium
                             )
 
@@ -150,16 +152,4 @@ fun MainMenuScreen(
             }
         }
     }
-}
-
-@androidx.compose.ui.tooling.preview.Preview(
-    showBackground = true
-)
-@Composable
-fun MainMenuScreenPreview() {
-    MainMenuScreen(
-        onNavigateToLesson = {},
-        onNavigateToSettings = {},
-        onNavigateToAbout = {}
-    )
 }
