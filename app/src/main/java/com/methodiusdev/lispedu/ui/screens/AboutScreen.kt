@@ -1,5 +1,6 @@
 package com.methodiusdev.lispedu.ui.screens
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
@@ -12,7 +13,11 @@ import androidx.compose.ui.unit.dp
 import com.methodiusdev.lispedu.R
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.viewinterop.AndroidView
+import android.webkit.WebView
+import android.webkit.WebViewClient
 
+@SuppressLint("SetJavaScriptEnabled")
 @Composable
 fun AboutScreen(
     onBackClick: () -> Unit
@@ -33,9 +38,25 @@ fun AboutScreen(
                 .height(160.dp)
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-        Text(text = "Authors")
+        val htmlMapPreview = """
+            <iframe style="border:none" src="https://mapy.com/s/carulabako" width="400" height="280" frameborder="0"></iframe>
+        """.trimIndent()
+        
+        AndroidView(
+            factory = { context ->
+                WebView(context).apply {
+                    settings.javaScriptEnabled = true
+                    loadData(htmlMapPreview, "text/html", "utf-8")
+                }
+            },
+            modifier = Modifier.fillMaxWidth().height(300.dp)
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Text(text = "Authors:")
 
         Spacer(modifier = Modifier.height(16.dp))
 
