@@ -30,6 +30,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import com.methodiusdev.lispedu.ui.screens.SplashScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,8 +51,20 @@ class MainActivity : ComponentActivity() {
 
                     NavHost(
                         navController = navController,
-                        startDestination = Screen.MainMenu.route
+                        startDestination = Screen.Splash.route
                     ) {
+                        composable(route = Screen.Splash.route) {
+                            SplashScreen(
+                                onSplashFinished = {
+                                    navController.navigate(Screen.MainMenu.route) {
+                                        popUpTo(Screen.Splash.route) {
+                                            inclusive = true
+                                        }
+                                    }
+                                }
+                            )
+                        }
+
                         composable(route = Screen.MainMenu.route) {
                             MainMenuScreen(
                                 onNavigateToAbout = {
