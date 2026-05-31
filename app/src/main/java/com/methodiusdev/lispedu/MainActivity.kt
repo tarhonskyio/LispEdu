@@ -26,13 +26,22 @@ import androidx.compose.material3.Surface
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.methodiusdev.lispedu.data.LispRepository
 import com.methodiusdev.lispedu.ui.viewmodel.LessonViewModel
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            LispEduTheme {
+            val preferences = getSharedPreferences("settings", MODE_PRIVATE)
+            var isDarkMode by remember {
+                mutableStateOf(preferences.getBoolean("dark_mode", false))
+            }
+
+            LispEduTheme(darkTheme = isDarkMode) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -67,6 +76,13 @@ class MainActivity : ComponentActivity() {
 
                         composable(route = Screen.Settings.route) {
                             ConfigScreen(
+                                isDarkMode = isDarkMode,
+                                onDarkModeChange = { enabled ->
+                                    isDarkMode = enabled
+                                    preferences.edit()
+                                        .putBoolean("dark_mode", enabled)
+                                        .apply()
+                                },
                                 onBackClick = {
                                     navController.popBackStack()
                                 }

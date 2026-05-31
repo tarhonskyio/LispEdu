@@ -13,9 +13,10 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ConfigScreen(
+    isDarkMode: Boolean,
+    onDarkModeChange: (Boolean) -> Unit,
     onBackClick: () -> Unit
 ) {
-    var isDarkMode by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -37,7 +38,7 @@ fun ConfigScreen(
 
             Switch(
                 checked = isDarkMode,
-                onCheckedChange = { isDarkMode = it }
+                onCheckedChange = onDarkModeChange
             )
         }
 
@@ -60,6 +61,8 @@ fun ConfigScreen(
 @Composable
 fun ConfigScreenPreview() {
     ConfigScreen(
+        isDarkMode = false,
+        onDarkModeChange = {},
         onBackClick = {}
     )
 }
